@@ -1,7 +1,9 @@
-import User from "../models/User.js"
-import bcrypt from "bcryptjs"
+import User from "../models/User.js";
+import bcrypt from "bcryptjs";
 import { createError } from "../utils/error.js";
-
+import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+dotenv.config();
 export  const register = async (req,res,next) =>{
 
     try{
@@ -16,10 +18,10 @@ export  const register = async (req,res,next) =>{
             password:hash,
         })
 
-        await newUser.save()
-        res.status(200).send('User has been created')
+        await newUser.save();
+        res.status(200).send('User has been created');
     }catch(err){
-        next(err)
+        next(err);
     }
 }
 
@@ -36,7 +38,19 @@ export const login = async (req,res,next) =>{
             return res.status(400).json(error);
         }   
 
-        res.status(200).json(user)
+            const token = jwt.sign(
+                {id:user._id, isAdmin: user.isAdmin},
+                 process.env.JWT); 
+ 
+            const {password, isAdmin, ...otherDetails } = user._doc;
+
+            res
+                .cookie("access_token",token,{
+                    httpOnly:true,
+                })
+                .status(200)
+                .json({...otherDetails});
+        //  res.status(200).json(user);
     } catch(err){
         next(err);
     }
