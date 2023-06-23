@@ -1,3 +1,6 @@
+import React from 'react'
+import Navbar from '../../components/navbar/Navar'
+import Header from '../../components/header/Header'
 
 
 
@@ -5,7 +8,8 @@ export default function List(){
 
 	return (
 		<div>
-		List
+			<Navbar/>
+			<Header  type="list" />
 		</div>
 	)
 }
