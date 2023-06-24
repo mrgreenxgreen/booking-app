@@ -13,7 +13,7 @@ configureRoutes(app);
 
 export function startServer() {
   connect();
-  app.listen(PORT_NO, () => {
-    console.log(`Connected to backend:port ${PORT_NO}`);
+  app.listen(9090, () => {
+    console.log(`Connected to backend:port 9090`);
   });
 }

@@ -16,9 +16,12 @@ router.post('/',verifyAdmin, createHotelController)
 router.put('/:id',verifyAdmin, updateHotelController);
 // //DELETE
 router.delete('/:id',verifyAdmin , deleteHotelController);
-// //GET
-router.get('/:id', getHotelController);
+
 // //GET ALL
 router.get('/',getAllHotelController);
+
+// //GET
+router.get('/:id', getHotelController);
+
 
 export default router;

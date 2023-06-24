@@ -9,8 +9,8 @@ export default app;
 
 // ENV CONFIGURATION
 dotenv.config();
-const MONGO_URI = process.env.MONGO_URI;
-
+// const MONGO_URI = "mongodb+srv://butong1234:1234@http://cluster0.f0ptkpt.mongodb.net/Cluster0?retryWrites=true&w=majority";
+const MONGO_URI = "mongodb+srv://butong1234:1234@cluster0.f0ptkpt.mongodb.net/mydatabase?retryWrites=true&w=majority";
 // DATABASE CONNECTION
 export const connect = async () => {
   try {
