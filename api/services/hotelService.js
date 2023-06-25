@@ -26,15 +26,43 @@ export const getHotelById = async (hotelId) => {
 
 //GET ALL
 
-
-export const getAllHotels = async () => {
+export const getAllHotels = async (params) => {
   try {
-    const hotels = await Hotels.find();
+    const { min, max, limit, ...others } = params;
+    const query = { ...others };
+
+    if (min || max) {
+      query.$expr = {
+        $and: []
+      };
+
+      if (min) {
+        query.$expr.$and.push({ $gt: ["$cheapestPrice", min] });
+      }
+
+      if (max) {
+        query.$expr.$and.push({ $lt: ["$cheapestPrice", max] });
+      }
+    }
+
+    const hotels = await Hotels.find(query).limit(limit);
     return hotels;
   } catch (error) {
     throw error;
   }
 };
+
+
+
+// export const getAllHotels = async (query) => {
+//   try {
+
+//     const hotels = await Hotels.find(query.query,cheapestPrice:{ $gt:min | 1, $lt:max|| 999}).limit(query.limit);
+//     return hotels;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 //UPDATE
 //no next in original
 

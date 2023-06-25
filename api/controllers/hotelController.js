@@ -26,12 +26,14 @@ export const getHotelController = async (req, res, next) => {
 
 export const getAllHotelController = async (request, response, next) => {
   try {
-    const hotels = await getAllHotels();
+    const { min, max, limit, ...others } = request.query;
+    const hotels = await getAllHotels({ ...others, min, max, limit });
     response.status(200).json(hotels);
   } catch (error) {
     next(error);
   }
 };
+
 
 
 export const updateHotelController = async (request, response, next) => {
