@@ -4,11 +4,15 @@ import usersRoute from '../routes/usersRoute.js';
 import roomsRoute from '../routes/roomsRoute.js';
 import hotelsRoute from '../routes/hotelRoute.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors'
+
+
 
 const app = express();
 export default app;
 
 export  function configureRoutes(app) {
+  app.use(cors());
   app.use(cookieParser());
   app.use(express.json());
   app.use('/api/auth', authRoute);
