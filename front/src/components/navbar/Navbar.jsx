@@ -1,10 +1,13 @@
-import "./navbar.css"
+import "./navbar.css";
+import {Link} from "react-router-dom";
 
 const Navbar = () => {
   return (
     <div className="navbar">
       <div className="navContainer">
-        <span className="logo">Tsinelas Reservation </span>
+        <Link to="/" style={{color:"inherit",textDecoration:"none"}} >
+        <h3 className="logo">TravelBooking</h3>
+        </Link>
         <div className="navItems">
           <button className="navButton">Register</button>
           <button className="navButton">Login</button>
