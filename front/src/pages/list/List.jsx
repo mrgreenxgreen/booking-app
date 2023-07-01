@@ -8,6 +8,9 @@ import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 import {useFetch, reFetch}  from "../../hooks/useFetch.js"
 import { SearchContextProvider,SearchContext } from "../../context/SearchContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 
 const List = () => {
@@ -19,10 +22,19 @@ const List = () => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
 //1:56 min
+  console.log(dates);
+
+  const navigate = useNavigate();
+  const {dispatch} = useContext(SearchContext)
   const handleClick = ()=>{
-reFetch() ;
+//reFetch() ;
+
+    dispatch({type:"NEW_SEARCH", payload:{destination,dates,options}})
+    navigate("/hotels", { state: { destination, dates, options } });
+
   }
 
+  
   // const location = useLocation();
   // const destination = location.state?.destination || "";
   // const [date, setDate] = useState([{ startDate: new Date(), endDate: new Date() }]);
@@ -52,11 +64,13 @@ reFetch() ;
               {openDate && (
                 <DateRange
                   onChange={(item) => setDates([item.selection])}
+                 // onChange={(item) => dispatch({ type: "NEW_DATES", payload: item.selection })}
                   minDate={new Date()}
                   ranges={dates}
                 />
               )}
             </div>
+
             <div className="lsItem">
               <label>Options</label>
               <div className="lsOptions">

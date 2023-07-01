@@ -26,7 +26,7 @@ const images = [
                   className="pListImg" />
               <div className="pListTitles">
                 <h2>{data[i]?.type}</h2>
-                <span>{data[i]?.count}{data[i]?.type}</span>
+                <span>{data[i]?.count} {data[i]?.type}</span>
             </div>
             </div>))}
         </>
