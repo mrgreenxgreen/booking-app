@@ -1,3 +1,8 @@
+/*
+ This page shows :
+  - the detailed information about the Hotel
+  - the total amount to pay
+*/
 import "./hotel.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
@@ -15,29 +20,32 @@ import {useLocation} from "react-router-dom";
 import {useFetch} from "../../hooks/useFetch.js";
 import { SearchContext } from "../../context/SearchContext";
 
+
+
 const Hotel = () => {
   const location = useLocation()
   const id = location.pathname.split("/"[2])
   //console.log(id)
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-
   const {data, loading, error} = useFetch(`${id}`)
   // console.log(data);
   const { dates,options } = useContext(SearchContext);
 
+
+  //Compute number of days
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-  
   function dayDifference(date1, date2){
     const timeDiff = Math.abs(date2.getTime() - date1.getTime());
     const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
     return diffDays;
   }
-
   const days = dayDifference(dates[0].endDate, dates[0].startDate);
 
-  
+  //check dates
   console.log(dates)
+  
+  //photos
   const photos = [
     {
       src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1",
