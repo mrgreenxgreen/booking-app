@@ -1,3 +1,8 @@
+/*
+  List Page 
+    - shows the list of hotels, or any other properties.
+    - allows to modify the data searched like number of nights, number of guests etc.
+*/
 import "./list.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
@@ -14,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const List = () => {
+
   const location = useLocation();
   const [destination, setDestination] = useState(location.state.destination);
   const [dates,setDates] = useState(location.state.dates);
@@ -21,19 +27,17 @@ const List = () => {
   const [options, setOptions] = useState(location.state.options);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
-//1:56 min
+//check ko lang
   console.log(dates);
 
   const navigate = useNavigate();
   const {dispatch} = useContext(SearchContext)
   const handleClick = ()=>{
 //reFetch() ;
-
     dispatch({type:"NEW_SEARCH", payload:{destination,dates,options}})
     navigate("/hotels", { state: { destination, dates, options } });
 
   }
-
   
   // const location = useLocation();
   // const destination = location.state?.destination || "";
@@ -47,6 +51,8 @@ const List = () => {
     <div>
       <Navbar />
       <Header type="list" />
+
+{/* SEARCH BOX*/}
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
@@ -70,7 +76,6 @@ const List = () => {
                 />
               )}
             </div>
-
             <div className="lsItem">
               <label>Options</label>
               <div className="lsOptions">
@@ -117,6 +122,8 @@ const List = () => {
             </div>
             <button onClick={handleClick}>Search</button>
           </div>
+
+{/* SEARCH RESULT  */}
           <div className="listResult">
            {loading ? "loading": <>
             {data.map(item=>(
