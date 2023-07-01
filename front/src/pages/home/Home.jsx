@@ -1,3 +1,10 @@
+/*
+  Home page of booking app w/c:
+    - contains header which contains the advanced search button
+      which allows to pick location, start date & end date, 
+      number of rooms, and number of guests.
+    - shows featured destinations, top rated hotels, etc.
+*/
 import Featured from "../../components/featured/Featured";
 import FeaturedProperties from "../../components/featuredProperties/FeaturedProperties";
 import Footer from "../../components/footer/Footer";
