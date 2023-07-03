@@ -1,7 +1,12 @@
 /*
- This page shows :
+ This page contains :
   - the detailed information about the Hotel
   - the total amount to pay
+1. computes number of days
+2. checkings
+3. photos (unused)
+4. setOpen/Close (unused)
+5. handleMove (unused)
 */
 import "./hotel.css";
 import Navbar from "../../components/navbar/Navbar";
@@ -25,15 +30,13 @@ import { SearchContext } from "../../context/SearchContext";
 const Hotel = () => {
   const location = useLocation()
   const id = location.pathname.split("/"[2])
-  //console.log(id)
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const {data, loading, error} = useFetch(`${id}`)
-  // console.log(data);
   const { dates,options } = useContext(SearchContext);
 
 
-  //Compute number of days
+  //1.Computes the number of days
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   function dayDifference(date1, date2){
     const timeDiff = Math.abs(date2.getTime() - date1.getTime());
@@ -42,10 +45,13 @@ const Hotel = () => {
   }
   const days = dayDifference(dates[0].endDate, dates[0].startDate);
 
+   //2.checking
+  //console.log(id)
+  // console.log(data);
   //check dates
-  console.log(dates)
+  //console.log(dates)
   
-  //photos
+  //3. unused photographs
   const photos = [
     {
       src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1",
@@ -66,12 +72,13 @@ const Hotel = () => {
       src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707389.jpg?k=52156673f9eb6d5d99d3eed9386491a0465ce6f3b995f005ac71abc192dd5827&o=&hp=1",
     },
   ];
-
+  //4.  setOpen/Close unused
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
   };
 
+  //  handleMove function unused
   const handleMove = (direction) => {
     let newSlideNumber;
 
@@ -112,18 +119,7 @@ const Hotel = () => {
           </div>
         )}
         <div className="hotelWrapper">
-          <button className="bookNow">Reserve or Book Now!</button>
-          <h1 className="hotelTitle">{data.name}</h1>
-          <div className="hotelAddress">
-            <FontAwesomeIcon icon={faLocationDot} />
-            <span>{data.address} </span>
-          </div>
-          <span className="hotelDistance">
-            Excellent location – {data.distance}m from center
-          </span>
-          <span className="hotelPriceHighlight">
-            Book a stay over ${data.cheapestPrice} at this property and get a free airport taxi
-          </span>
+          
           <div className="hotelImages">
             {data.photos?.map((photo, i) => (
               <div className="hotelImgWrapper" key={i}>
@@ -137,9 +133,39 @@ const Hotel = () => {
             ))}
           </div>
           <div className="hotelDetails">
+            <div className="hotelDetailsPrice">
+              
+              <h1>Perfect for a {days}night stay!</h1>
+              <span>
+                 {/* TO DO: edit ko pa ini  */}
+                Located in the real heart of Krakow, this property has an
+                excellent location score of 9.8!
+              </span>
+              <h2>
+                <b>${days * data.cheapestPrice * options.room}</b> ({days} night/s)
+              </h2>
+               {/* TO DO: edit ko pa ini  */}
+              <button>Reserve or Book Now!</button>
+            </div>
             <div className="hotelDetailsTexts">
+            <h1 className="hotelTitle">{data.name}</h1>
+          <div className="hotelAddress">
+            <FontAwesomeIcon icon={faLocationDot} />
+            <span>{data.address} </span>
+          </div>
+         
+         
+          <span className="hotelDistance">
+            Excellent location – {data.distance}m from center
+          </span>
+          <p>
+          <span className="hotelPriceHighlight">
+            Book a stay over ${data.cheapestPrice} at this property and get a free airport taxi
+          </span>
+          </p>
               <h1 className="hotelTitle">Stay in the heart of City</h1>
               <p className="hotelDesc">
+                {/* TO DO: edit ko pa ini  */}
                 Located a 5-minute walk from St. Florian's Gate in Krakow, Tower
                 Street Apartments has accommodations with air conditioning and
                 free WiFi. The units come with hardwood floors and feature a
@@ -153,17 +179,7 @@ const Hotel = () => {
                 airport shuttle service.
               </p>
             </div>
-            <div className="hotelDetailsPrice">
-              <h1>Perfect for a {days}night stay!</h1>
-              <span>
-                Located in the real heart of Krakow, this property has an
-                excellent location score of 9.8!
-              </span>
-              <h2>
-                <b>${days * data.cheapestPrice * options.room}</b> ({days} night/s)
-              </h2>
-              <button>Reserve or Book Now!</button>
-            </div>
+          
           </div>
         </div>
         <MailList />

@@ -17,7 +17,6 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-
 const List = () => {
 
   const location = useLocation();
@@ -38,7 +37,7 @@ const List = () => {
     navigate("/hotels", { state: { destination, dates, options } });
 
   }
-  
+
   // const location = useLocation();
   // const destination = location.state?.destination || "";
   // const [date, setDate] = useState([{ startDate: new Date(), endDate: new Date() }]);
@@ -70,7 +69,7 @@ const List = () => {
               {openDate && (
                 <DateRange
                   onChange={(item) => setDates([item.selection])}
-                 // onChange={(item) => dispatch({ type: "NEW_DATES", payload: item.selection })}
+ // onChange={(item) => dispatch({ type: "NEW_DATES", payload: item.selection })}
                   minDate={new Date()}
                   ranges={dates}
                 />

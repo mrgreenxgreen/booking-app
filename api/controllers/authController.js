@@ -32,9 +32,9 @@ export const login = async (req,res,next) =>{
             const error = createError(404,"user not found!");
             return res.status(404).json(error);
         }
-        const isPasswordCorrect = await bcrypt.compare(req.body.password,user.password)
+        const isPasswordCorrect = await bcrypt.compare(req.body.password,user.password);
         if(!isPasswordCorrect){
-            error = createError(400, "Wrong password or username");
+            const error = createError(400, "Wrong password or username");
             return res.status(400).json(error);
         }   
 
@@ -56,6 +56,13 @@ export const login = async (req,res,next) =>{
     }
 }
 
+export const logout = (req, res) => {
+    // Set the token to null in the session
+    req.session.token = null;
+  
+    // Redirect the user to the login page
+    res.redirect('/login');
+  };
 
 
 

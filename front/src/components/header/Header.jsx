@@ -1,3 +1,17 @@
+/*
+1. destination
+2. dates
+3. options
+4. change options
+5. context
+6. search
+10. Search Bar
+  10.1 Search input
+  10.2 Calendar/Date Picker
+  10.3 Options: number of guest/room
+11. Search Button
+*/
+
 import {
   faBed,
   faCalendarDays,
@@ -16,10 +30,15 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { SearchContextProvider,SearchContext } from "../../context/SearchContext";
 import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 
 const Header = ({ type }) => {
+
+  const {user} = useContext(AuthContext);
+//1. destination(City) state
   const [destination, setDestination] = useState("");
+//2. dates: start & end
   const [openDate, setOpenDate] = useState(false);
   const [dates, setDates] = useState([
     {
@@ -28,15 +47,14 @@ const Header = ({ type }) => {
       key: "selection",
     },
   ]);
+//3. options for number of guests & rooms 
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
     children: 0,
     room: 1,
   });
-
-  const navigate = useNavigate();
-
+//4. function for increasing/decreasing the number of guest/s and rooms
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -45,9 +63,10 @@ const Header = ({ type }) => {
       };
     });
   };
-
+//5. Context
   const {dispatch} = useContext(SearchContext)
-
+//6. search
+  const navigate = useNavigate();
   const handleSearch = () => {
     dispatch({type:"NEW_SEARCH", payload:{destination,dates,options}})
     navigate("/hotels", { state: { destination, dates, options } });
@@ -55,11 +74,15 @@ const Header = ({ type }) => {
 
   return (
     <div className="header">
+
+      {/*7.show/hide*/}
       <div
         className={
           type === "list" ? "headerContainer listMode" : "headerContainer"
         }
       >
+
+        {/*8.options */}
         <div className="headerList">
           <div className="headerListItem active">
             <FontAwesomeIcon icon={faBed} />
@@ -82,8 +105,10 @@ const Header = ({ type }) => {
             <span>Airport taxis</span>
           </div>
         </div>
+    
         {type !== "list" && (
           <>
+            {/*9. Head Line */}
             <h1 className="headerTitle">
              Travel Goals 2023? Book now and get discounts. 
             </h1>
@@ -91,10 +116,16 @@ const Header = ({ type }) => {
               Get rewarded for your travels – instant savings of 10% or
               more with a chance of winning prizes.
             </p>
+            {!user &&
             <button className="headerBtn">Sign in / Register</button>
+
+            }
+            
+            {/*10. Search bar starts here */}
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faBed} className="headerIcon" />
+                {/*10.1 search input */}
                 <input
                   type="text"
                   placeholder="Where are you going?"
@@ -103,6 +134,8 @@ const Header = ({ type }) => {
                 />
               </div>
               <div className="headerSearchItem">
+
+                {/*10.2 Calendar: Date picker */}
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
                 <span
                   onClick={() => setOpenDate(!openDate)}
@@ -122,7 +155,9 @@ const Header = ({ type }) => {
                   />
                 )}
               </div>
+
               <div className="headerSearchItem">
+                {/*10.3 Options: Number of Guests & Room */}
                 <FontAwesomeIcon icon={faPerson} className="headerIcon" />
                 <span
                   onClick={() => setOpenOptions(!openOptions)}
@@ -196,6 +231,7 @@ const Header = ({ type }) => {
                   </div>
                 )}
               </div>
+              {/*11. Search Button */}
               <div className="headerSearchItem">
                 <button className="headerBtn" onClick={handleSearch}>
                   Search
